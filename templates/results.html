@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="results-container">
+    <div class="results-header">
+        <p>Results for: <strong>"{{ topic }}"</strong>
+        {% if difficulty != 'All' %}
+            &nbsp;&middot;&nbsp; <span class="filter-badge">{{ difficulty }}</span>
+        {% endif %}
+        &nbsp;&middot;&nbsp; {{ results|length }} resource{{ 's' if results|length != 1 }}</p>
+        <a href="/" class="back-link">&larr; New search</a>
+    </div>
+
+    {% if results %}
+        {% for r in results %}
+        <div class="resource-card">
+            <div class="card-header">
+                <a href="{{ r.url }}" target="_blank" class="resource-title">{{ r.title }}</a>
+                <span class="score">{{ r.score }}</span>
+            </div>
+            <div class="badges">
+                <span class="badge format-{{ r.format.lower() }}">{{ r.format }}</span>
+                <span class="badge diff-{{ r.difficulty.lower() }}">{{ r.difficulty }}</span>
+            </div>
+            <p class="description">{{ r.description }}</p>
+            <div class="score-bar">
+                <div class="score-fill" style="width: {{ (r.score * 100)|int }}%"></div>
+            </div>
+            <p class="score-label">Relevance score: {{ r.score }} &mdash; matches your topic interest</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-results">
+            <p>No matching resources found for "<strong>{{ topic }}</strong>"
+            {% if difficulty != 'All' %} at {{ difficulty }} level{% endif %}.</p>
+            <p>Try a broader topic or select All levels.</p>
+            <a href="/" class="back-link">&larr; Try another search</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

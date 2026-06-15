@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+    <h1>Find the right study resource</h1>
+    <p class="subtitle">Enter a topic and get personalised recommendations matched to your interests and level</p>
+
+    <form action="/recommend" method="POST" class="search-form">
+        <label for="topic">What topic are you studying?</label>
+        <input type="text" id="topic" name="topic"
+               placeholder="e.g. Python functions, machine learning, networking..."
+               required>
+
+        <label for="difficulty">Filter by difficulty (optional)</label>
+        <select id="difficulty" name="difficulty">
+            <option value="All">All levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+        </select>
+
+        <button type="submit">Get recommendations</button>
+    </form>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <p class="note">&#128275; No account or login required</p>
+</div>
+{% endblock %}
